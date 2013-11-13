@@ -1,8 +1,6 @@
 class PicturesController < ApplicationController
   def show
-
   	@picture = Picture.find(params[:id])
-
   end
 
   def index
@@ -13,27 +11,31 @@ class PicturesController < ApplicationController
 end
 
 def create
-  @p = Picture.new
-  @p.source = params[:source]
-  @p.caption = params[:caption]
-  @p.save
+  p = Picture.new
+  p.source = params[:source]
+  p.caption = params[:caption]
+  p.save
+  
+  redirect_to pictures_url, :notice => "You have created a new picture" 
 end
 
 def update
-  @picture_update = Picture.find(params[:id])
-  @picture_update.source = params[:source]
-  @picture_update.caption = params[:caption]
-  @picture_update.save
+  p = Picture.find(params[:id])
+  p.source = params[:source]
+  p.caption = params[:caption]
+  p.save
+  redirect_to picture_url(p.id), :notice => "You have updated the picture"
 end
 
 def edit
-  @picture_edited = Picture.find(params[:id])
+  @picture = Picture.find(params[:id])
+
 end
 
   def destroy
-  	@picture_delete = Picture.find(params[:id])
-  	@picture_delete.destroy
-
+  	p = Picture.find(params[:id])
+  	p.destroy
+  	redirect_to pictures_url, :notice => "You have deleted the picture"
  
   end
 end
